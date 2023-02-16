@@ -65,8 +65,6 @@ app.use( "*", ( req, res ) => {
 
   const url = req.originalUrl
 
-  console.log( url )
-
   let html = fs.readFileSync(
     path.join( __dirname, "..", "build", "index.html" ),
     "utf-8"

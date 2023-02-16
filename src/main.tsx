@@ -17,15 +17,15 @@ const Render: FC = () => {
 
 if( typeof window !== "undefined" ) {
 
+  // const container = document.getElementById('root') as HTMLElement
+  // //@ts-ignore
+  // if( import.meta.hot || !container?.innerText ) {
+  //   console.log( "rendering app..." )
+  //   const root = ReactDOM.createRoot( container! )
+  //   root.render( <Render/> )
+  // } else {
+  // }
+  console.log( "hydrating app..." )
   const container = document.getElementById('root') as HTMLElement
-  //@ts-ignore
-  if( import.meta.hot || !container?.innerText ) {
-    console.log( "rendering app..." )
-    const root = ReactDOM.createRoot( container! )
-    root.render( <Render/> )
-  } else {
-    console.log( "hydrating app..." )
-    const container = document.getElementById('root') as HTMLElement
-    ReactDOM.hydrateRoot( container!, <Render/> )
-  }
+  ReactDOM.hydrateRoot( container!, <Render/> )
 }
