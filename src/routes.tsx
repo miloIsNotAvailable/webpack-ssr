@@ -46,7 +46,8 @@ const importAll: (
         // get rid of ./'s 
         // name of parent folder (pages)
         // and .tsx extention
-        .replace(/\/pages|index|\.\/|\.tsx$/g, '')
+        .replace(/\/pages|\.\/|\.tsx$/g, '')
+        .replace( "index", "/" )
         // when I wrote this only god and I knew 
         // what this does, now only god knows
         .replace(/\[\.{3}.+\]/, '*')
@@ -65,6 +66,8 @@ const AppRoutes: FC = () => {
 
     const routes = importAll( require.context( "../pages", true, /\.tsx$/ ) )
     const location = useLocation()
+
+    console.log( routes )
 
     return (
         // <AnimatePresence mode="wait">

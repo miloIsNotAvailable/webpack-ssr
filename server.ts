@@ -47,41 +47,39 @@ const webpackBundleFiles: () => void = () => {
   } )
 }
 
-async function createServer() {
-  const app = express()
+const app = express()
 
-  app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }))
-  app.use( express.static("build") );
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }))
+app.use( express.static("build") );
 
-  // parse application/json
-  app.use(bodyParser.json( { limit: '50mb' } ))
+// parse application/json
+app.use(bodyParser.json( { limit: '50mb' } ))
 
-  const serverCompiler = webpack( serverConfig )
-  serverCompiler.outputFileSystem = fs;
+const serverCompiler = webpack( serverConfig )
+serverCompiler.outputFileSystem = fs;
 
-  const render_with_webpack = webpackTransformReact()
-  webpackBundleFiles()
+const render_with_webpack = webpackTransformReact()
+webpackBundleFiles()
 
-  app.use( "*", ( req, res ) => {   
+app.use( "*", ( req, res ) => {   
 
-    const url = req.originalUrl
+  const url = req.originalUrl
 
-    let html = fs.readFileSync(
-      path.join( __dirname, "..", "build", "index.html" ),
-      "utf-8"
-    )
+  console.log( url )
 
-    html = html.replace( 
-      `<!-- ssr-outlet -->`, 
-      render_with_webpack( url ) 
-    )
-    console.log( url, render_with_webpack( url ) )
+  let html = fs.readFileSync(
+    path.join( __dirname, "..", "build", "index.html" ),
+    "utf-8"
+  )
 
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(html) 
-  } )
+  html = html.replace( 
+    `<!-- ssr-outlet -->`, 
+    render_with_webpack( url ) 
+  )
+  console.log( url, render_with_webpack( url ) )
 
-  const PORT = 6173 || process.env.PORT
-  app.listen(PORT, () => console.log( `✨ app is running on http://localhost:${ PORT }` ))
-}
+  res.status(200).set({ 'Content-Type': 'text/html' }).end(html) 
+} )
 
-createServer()
+const PORT = 6173 || process.env.PORT
+app.listen(PORT, () => console.log( `✨ app is running on http://localhost:${ PORT }` ))
