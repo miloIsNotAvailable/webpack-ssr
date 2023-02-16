@@ -51,6 +51,7 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }))
 app.use( express.static("build") );
+app.use( express.static("build-ssr/dist") );
 
 // parse application/json
 app.use(bodyParser.json( { limit: '50mb' } ))
@@ -62,13 +63,13 @@ const render_with_webpack = webpackTransformReact()
 webpackBundleFiles()
 
 app.use( "*", ( req, res ) => {   
-
+  
   const url = req.originalUrl
 
   let html = fs.readFileSync(
     path.join( __dirname, "..", "build", "index.html" ),
     "utf-8"
-  )
+  )  
 
   html = html.replace( 
     `<!-- ssr-outlet -->`, 
