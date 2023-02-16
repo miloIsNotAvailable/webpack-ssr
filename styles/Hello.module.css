@@ -1,0 +1,19 @@
+.hello {
+    color: red;
+    background-color: aliceblue;
+}
+
+.hey {
+    color: tomato;
+    font-size: 4rem;
+}
+
+.hi {
+    color: blue
+}
+.title {
+    font-size: 8rem;
+    font-family: Arial;
+    font-weight: bolder;
+    color: white;
+}
